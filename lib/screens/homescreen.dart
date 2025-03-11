@@ -43,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
       trendingmovies = trendingresult['results'];
       topmovies = topmoviesresult['results'];
       tvshows = tvresult['results'];
-      print(tvshows);
     });
   }
 
