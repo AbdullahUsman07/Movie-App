@@ -7,6 +7,8 @@ class TvShows extends StatelessWidget {
 
   List tvShows = [];
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +50,7 @@ class TvShows extends StatelessWidget {
                     );
                     
                   },
-                  child: tvShows[index]['original_name']!= null ? Container(
+                  child: tvShows[index]['original_name']!= null  && tvShows[index]['backdrop_path']!= null? Container(
                     width: 300,
                     child: Column(
                       children: [
@@ -85,4 +87,5 @@ class TvShows extends StatelessWidget {
       ),
     );
   }
+  
 }

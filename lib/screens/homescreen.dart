@@ -54,9 +54,69 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         elevation: 10.0,
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            Container(
+              height: 230,
+              width: double.infinity,
+             // color: Colors.green,
+              child: Row(
+                children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: CircleAvatar(
+                    radius: 60,
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 75),
+                      child: Custom_Text(text: 'Abdullah Usman', color: Colors.white, font: 20),
+                    ),
+                    const SizedBox(height: 5,),
+                    Custom_Text(text: 'au87235@gmail.com', color: Colors.white, font: 15),
+                  ],
+                )
+              ],),
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.movie),
+              title: Custom_Text(text: 'Favorites Movies', color: Colors.white, font: 20),
+            ),
+            ListTile(
+              leading: Icon(Icons.tv),
+              title: Custom_Text(text: 'Favorites Shows', color: Colors.white, font: 20),
+            ),
+
+            const SizedBox(height: 250,),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Custom_Text(text: 'Logout', color: Colors.white, font: 20),
+            )
+          ],
+        ),
+      ),
       body: ListView(
         children: [
           const SizedBox(height: 10,),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                icon: Icon(Icons.search),
+                hintText: 'Search for any movie or show',
+                border:  OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
+          
           TvShows(tvShows: tvshows),
           TrendingMovies(trendingmovies: trendingmovies),
           TopRatedMovies(topRated: topmovies),
