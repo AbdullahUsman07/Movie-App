@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/screens/description.dart';
+import 'package:movie_app/models/movieModel.dart';
+import 'package:movie_app/screens/movie_description.dart';
 import 'package:movie_app/utlis/text.dart';
 
 class TrendingMovies extends StatelessWidget {
@@ -27,24 +28,23 @@ class TrendingMovies extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
+                    final movie = Movie(
+                      date: trendingmovies[index]['release_date'],
+                      title: trendingmovies[index]['title'],
+                      rating: trendingmovies[index]['vote_average'].toString(),
+                      bannerPath:
+                          'https://image.tmdb.org/t/p/w500' +
+                          trendingmovies[index]['backdrop_path'],
+                      posterPath:
+                          'https://image.tmdb.org/t/p/w500' +
+                          trendingmovies[index]['poster_path'],
+                      description: trendingmovies[index]['overview'],
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder:
-                            (context) => DescriptionScreen(
-                              bannerUrl:
-                                  'https://image.tmdb.org/t/p/w500' +
-                                  trendingmovies[index]['backdrop_path'],
-                              rating:
-                                  trendingmovies[index]['vote_average']
-                                      .toString(),
-                              title: trendingmovies[index]['title'],
-                              release_date:
-                                  trendingmovies[index]['release_date'],
-                              details: trendingmovies[index]['overview'],
-                              poster: 'https://image.tmdb.org/t/p/w500' + trendingmovies[index]['poster_path'],
-                              isMovie: true,
-                            ),
+                            (context) => MovieDescriptionScreen(movie: movie),
                       ),
                     );
                   },

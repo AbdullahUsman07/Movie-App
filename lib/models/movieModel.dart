@@ -8,7 +8,6 @@ class Movie{
   final String description;
   final String rating;
   final String date;
-  bool isFavourite;
 
   Movie({
     required this.date,
@@ -17,7 +16,6 @@ class Movie{
     required this.bannerPath,
     required this.posterPath,
     required this.description,
-    this.isFavourite =false,
 });
 
   Map<String,dynamic> toJson(){

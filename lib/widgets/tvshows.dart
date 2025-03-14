@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/screens/description.dart';
+import 'package:movie_app/models/tvshowMode.dart';
+import 'package:movie_app/screens/movie_description.dart';
+import 'package:movie_app/screens/show_description.dart';
 import 'package:movie_app/utlis/text.dart';
 
 class TvShows extends StatelessWidget {
@@ -29,26 +31,14 @@ class TvShows extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (context) => DescriptionScreen(
-                              bannerUrl:
-                                  'https://image.tmdb.org/t/p/w500' +
-                                  tvShows[index]['backdrop_path'],
-                              rating:
-                                  tvShows[index]['vote_average']
-                                      .toString(),
-                              title: tvShows[index]['original_name'],
-                              release_date:
-                                  tvShows[index]['first_air_date'],
-                              details: tvShows[index]['overview'],
-                              poster: 'https://image.tmdb.org/t/p/w500' + tvShows[index]['poster_path'],
-                              isMovie: false,
-                            ),
-                      ),
-                    );
+                    final show = TvShow(date: tvShows[index]['first_air_date'],
+                     title: tvShows[index]['original_name'],
+                      rating: tvShows[index]['vote_average'].toString(),
+                       bannerPath: 'https://image.tmdb.org/t/p/w500' + tvShows[index]['backdrop_path'], 
+                       posterPath: 'https://image.tmdb.org/t/p/w500' + tvShows[index]['poster_path'], 
+                       description: tvShows[index]['overview']);
+                    
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ShowDescriptionScreen(show: show)));
                     
                   },
                   child: tvShows[index]['original_name']!= null  && tvShows[index]['backdrop_path']!= null? Container(

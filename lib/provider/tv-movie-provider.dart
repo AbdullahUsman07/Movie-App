@@ -48,44 +48,14 @@ void loadShowsfromStorage() {
     storage.setItem('tvshows', jsonString);
   }
 
-  void addmovies({
-    required String title,
-    required String description,
-    required String poster,
-    required String banner,
-    required String rating,
-    required String release,
-  }) {
-    final movie = Movie(
-      date: release,
-      title: title,
-      rating: rating,
-      bannerPath: banner,
-      posterPath: poster,
-      description: description,
-    );
+  void addmovies(Movie movie) {
     _movies.add(movie);
     saveMovietoStorage();
     print('movie added');
     notifyListeners();
   }
 
-  void addshow({
-    required String title,
-    required String description,
-    required String poster,
-    required String banner,
-    required String rating,
-    required String release,
-  }) {
-    final show = TvShow(
-      date: release,
-      title: title,
-      rating: rating,
-      bannerPath: banner,
-      posterPath: poster,
-      description: description,
-    );
+  void addshow(TvShow show) {
     _tvshows.add(show);
     saveTvShowstoStorage();
     print('show added');
@@ -106,6 +76,17 @@ void loadShowsfromStorage() {
     notifyListeners();
   }
 
-  
+  bool isFavouriteMovie(String title){
+    return _movies.any((movie)=> movie.title == title);
+  }
+
+  bool isFavouriteShow(String title){
+    return _tvshows.any((show)=> show.title == title);
+  }
+
+
+  void toggleFavouriteMovie(){
+
+  }
   
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/screens/description.dart';
+import 'package:movie_app/models/movieModel.dart';
+import 'package:movie_app/screens/movie_description.dart';
 import 'package:movie_app/utlis/text.dart';
 
 class TopRatedMovies extends StatelessWidget {
@@ -28,55 +29,58 @@ class TopRatedMovies extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
+                    final movie = Movie(
+                      date: topRated[index]['release_date'],
+                      title: topRated[index]['title'],
+                      rating: topRated[index]['vote_average'].toString(),
+                      bannerPath:
+                          'https://image.tmdb.org/t/p/w500' +
+                          topRated[index]['backdrop_path'],
+                      posterPath:
+                          'https://image.tmdb.org/t/p/w500' +
+                          topRated[index]['poster_path'],
+                      description: topRated[index]['overview'],
+                    );
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder:
-                            (context) => DescriptionScreen(
-                              bannerUrl:
-                                  'https://image.tmdb.org/t/p/w500' +
-                                  topRated[index]['backdrop_path'],
-                              rating: topRated[index]['vote_average'].toString(),
-                              title: topRated[index]['title'],
-                              release_date: topRated[index]['release_date'],
-                              details: topRated[index]['overview'],
-                              poster:
-                                  'https://image.tmdb.org/t/p/w500' +
-                                  topRated[index]['poster_path'],
-                              isMovie: true,
-                            ),
+                            (context) => MovieDescriptionScreen(movie: movie),
                       ),
                     );
                   },
-                  child: topRated[index]['title'] != null? Container(
-                    width: 140,
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(10.0),
-                          height: 200,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                'https://image.tmdb.org/t/p/w500' +
-                                    topRated[index]['poster_path'],
-                              ),
-                              fit: BoxFit.cover,
+                  child:
+                      topRated[index]['title'] != null
+                          ? Container(
+                            width: 140,
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.all(10.0),
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        'https://image.tmdb.org/t/p/w500' +
+                                            topRated[index]['poster_path'],
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Custom_Text(
+                                  text:
+                                      topRated[index]['title'] != null
+                                          ? topRated[index]['title']
+                                          : 'Loading',
+                                  color: Colors.white,
+                                  font: 15,
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-                        Custom_Text(
-                          text:
-                              topRated[index]['title'] != null
-                                  ? topRated[index]['title']
-                                  : 'Loading',
-                          color: Colors.white,
-                          font: 15,
-                        ),
-                      ],
-                    ),
-                  ): Container(),
+                          )
+                          : Container(),
                 );
               },
             ),

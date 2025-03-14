@@ -1,30 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/models/movieModel.dart';
+import 'package:movie_app/models/tvshowMode.dart';
 import 'package:movie_app/provider/tv-movie-provider.dart';
 import 'package:movie_app/utlis/text.dart';
 import 'package:provider/provider.dart';
 
-class DescriptionScreen extends StatefulWidget {
-  String bannerUrl, rating, title, release_date, details, poster;
-  bool isMovie;
+
+class ShowDescriptionScreen extends StatefulWidget {
+  TvShow show;
   bool isFav = false;
 
-  DescriptionScreen({
+  ShowDescriptionScreen({
     super.key,
-    required this.bannerUrl,
-    required this.rating,
-    required this.title,
-    required this.release_date,
-    required this.details,
-    required this.poster,
-    required this.isMovie,
+    required this.show,
   });
 
   @override
-  State<DescriptionScreen> createState() => _DescriptionScreenState();
+  State<ShowDescriptionScreen> createState() => _ShowDescriptionScreenState();
 }
 
-class _DescriptionScreenState extends State<DescriptionScreen> {
+class _ShowDescriptionScreenState extends State<ShowDescriptionScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<MovieAndShowProvider>(context);
@@ -41,14 +35,14 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                     child: Container(
                       height: 250,
                       width: MediaQuery.of(context).size.width,
-                      child: Image.network(widget.bannerUrl, fit: BoxFit.cover),
+                      child: Image.network(widget.show.bannerPath, fit: BoxFit.cover),
                     ),
                   ),
                   Positioned(
                     bottom: 10.0,
                     left: 2.0,
                     child: Custom_Text(
-                      text: '⭐Average Rating - ' + widget.rating,
+                      text: '⭐Average Rating - ' + widget.show.rating,
                       color: Colors.white,
                       font: 18,
                     ),
@@ -62,11 +56,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                               onPressed: () {
                                 setState(() {
                                   widget.isFav = !widget.isFav;
-                                  if (widget.isMovie) {
-                                    provider.deletemovie(widget.title);
-                                  } else {
-                                    provider.deleteShows(widget.title);
-                                  }
+                                  provider.deleteShows(widget.show.title);
                                 });
                               },
                               icon: Icon(Icons.favorite, color: Colors.red),
@@ -75,25 +65,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                               onPressed: () {
                                 setState(() {
                                   widget.isFav = !widget.isFav;
-                                  if (widget.isMovie) {
-                                    provider.addmovies(
-                                      title: widget.title,
-                                      description: widget.details,
-                                      poster: widget.poster,
-                                      banner: widget.bannerUrl,
-                                      rating: widget.rating,
-                                      release: widget.release_date,
-                                    );
-                                  } else {
-                                    provider.addshow(
-                                      title: widget.title,
-                                      description: widget.details,
-                                      poster: widget.poster,
-                                      banner: widget.bannerUrl,
-                                      rating: widget.rating,
-                                      release: widget.release_date,
-                                    );
-                                  }
+                                  provider.addshow(widget.show);
                                 });
                               },
                               icon: Icon(Icons.favorite, color: Colors.white),
@@ -106,7 +78,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
             Container(
               padding: EdgeInsets.all(10.0),
               child: Custom_Text(
-                text: widget.title,
+                text: widget.show.title,
                 color: Colors.white,
                 font: 23,
               ),
@@ -114,7 +86,7 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
             Container(
               padding: EdgeInsets.only(left: 10.0),
               child: Custom_Text(
-                text: 'Releasing on - ' + widget.release_date,
+                text: 'Releasing on - ' + widget.show.date,
                 color: Colors.white,
                 font: 16,
               ),
@@ -129,13 +101,13 @@ class _DescriptionScreenState extends State<DescriptionScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
-                  child: Image.network(widget.poster, fit: BoxFit.fill),
+                  child: Image.network(widget.show.posterPath, fit: BoxFit.fill),
                 ),
                 Flexible(
                   child: Container(
                     padding: const EdgeInsets.all(10.0),
                     child: Custom_Text(
-                      text: widget.details,
+                      text: widget.show.description,
                       color: Colors.white,
                       font: 18,
                     ),
