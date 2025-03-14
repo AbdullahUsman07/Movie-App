@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:movie_app/screens/favouriteMovies.dart';
+import 'package:movie_app/screens/favouriteShow.dart';
 import 'package:movie_app/utlis/text.dart';
 import 'package:movie_app/widgets/toprated.dart';
 import 'package:movie_app/widgets/trending.dart';
@@ -84,11 +86,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Divider(),
             ListTile(
-              leading: Icon(Icons.movie),
+              leading: IconButton(onPressed: (){
+                Navigator.push(context, 
+                MaterialPageRoute(builder: (context)=> FavMovies()));
+              }, icon: Icon(Icons.movie)),
               title: Custom_Text(text: 'Favorites Movies', color: Colors.white, font: 20),
             ),
             ListTile(
-              leading: Icon(Icons.tv),
+              leading: IconButton(onPressed: (){
+                Navigator.push(context, 
+                MaterialPageRoute(builder: (context)=> FavShows()));
+              }, icon: Icon(Icons.tv)),
               title: Custom_Text(text: 'Favorites Shows', color: Colors.white, font: 20),
             ),
 

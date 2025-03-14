@@ -43,6 +43,7 @@ class TrendingMovies extends StatelessWidget {
                                   trendingmovies[index]['release_date'],
                               details: trendingmovies[index]['overview'],
                               poster: 'https://image.tmdb.org/t/p/w500' + trendingmovies[index]['poster_path'],
+                              isMovie: true,
                             ),
                       ),
                     );

@@ -1,21 +1,34 @@
 
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
+import 'package:movie_app/provider/tv-movie-provider.dart';
 import 'package:movie_app/screens/homescreen.dart';
+import 'package:provider/provider.dart';
 
 
-void main() => runApp(const MyApp());
+Future<void> main()async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await initLocalStorage();
+  runApp(MyApp(localStorage: localStorage));
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final LocalStorage localStorage;
+  const MyApp({super.key, required this.localStorage});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(  
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => MovieAndShowProvider(localStorage))
+      ],
+      child: MaterialApp(  
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+        ),
+        home: HomeScreen(),
       ),
-      home: HomeScreen(),
     );
   }
 }

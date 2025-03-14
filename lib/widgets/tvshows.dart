@@ -45,6 +45,7 @@ class TvShows extends StatelessWidget {
                                   tvShows[index]['first_air_date'],
                               details: tvShows[index]['overview'],
                               poster: 'https://image.tmdb.org/t/p/w500' + tvShows[index]['poster_path'],
+                              isMovie: false,
                             ),
                       ),
                     );

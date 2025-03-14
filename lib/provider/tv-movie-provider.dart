@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -6,9 +5,7 @@ import 'package:movie_app/models/movieModel.dart';
 import 'package:movie_app/models/tvshowMode.dart';
 import 'package:localstorage/localstorage.dart';
 
-
-class MovieAndShowProvider extends ChangeNotifier{
-
+class MovieAndShowProvider extends ChangeNotifier {
   final LocalStorage storage;
 
   List<Movie> _movies = [];
@@ -16,64 +13,99 @@ class MovieAndShowProvider extends ChangeNotifier{
 
   List<Movie> get movies => _movies;
   List<TvShow> get tvshows => _tvshows;
-
   
-  MovieAndShowProvider(this.storage){
+
+  MovieAndShowProvider(this.storage) {
     loadMoviefromStorage();
     loadShowsfromStorage();
   }
 
-  void loadMoviefromStorage(){
-    var storedmovie = storage.getItem('movies');
-    if(storedmovie != null){
-      _movies = List<Movie>.from(
-        (storedmovie as List).map((movie)=> Movie.fromJson(movie))
-      );
-      notifyListeners();
-    }
+ void loadMoviefromStorage() {
+  var storedmovie = storage.getItem('movies');
+  if (storedmovie != null) {
+    List<dynamic> decodedList = jsonDecode(storedmovie);
+    _movies = decodedList.map((movie) => Movie.fromJson(movie)).toList();
+    notifyListeners();
+  }
+}
+
+void loadShowsfromStorage() {
+  var storedshow = storage.getItem('tvshows');
+  if (storedshow != null) {
+    List<dynamic> decodedList = jsonDecode(storedshow);
+    _tvshows = decodedList.map((tvshow) => TvShow.fromJson(tvshow)).toList();
+    notifyListeners();
+  }
+}
+
+  void saveMovietoStorage() {
+    String jsonString = jsonEncode(_movies.map((m) => m.toJson()).toList());
+    storage.setItem('movies', jsonString);
   }
 
-  void loadShowsfromStorage(){
-    var storedshow = storage.getItem('tvshows');
-    if(storedshow != null){
-      _tvshows = List<TvShow>.from(
-        (storedshow as List).map((tvshow) => TvShow.fromJson(tvshow))
-      );
-      notifyListeners();
-    }
-  }
-  void saveMovietoStorage(){
-    String jsonString = jsonEncode(_movies.map((m)=> m.toJson()).toList());
-    storage.setItem('movies',jsonString);
-  }
-
-  void saveTvShowstoStorage(){
-    String jsonString = jsonEncode(_tvshows.map((tv)=> tv.toJson()).toList());
+  void saveTvShowstoStorage() {
+    String jsonString = jsonEncode(_tvshows.map((tv) => tv.toJson()).toList());
     storage.setItem('tvshows', jsonString);
   }
 
-  void addmovies(Movie movie){
+  void addmovies({
+    required String title,
+    required String description,
+    required String poster,
+    required String banner,
+    required String rating,
+    required String release,
+  }) {
+    final movie = Movie(
+      date: release,
+      title: title,
+      rating: rating,
+      bannerPath: banner,
+      posterPath: poster,
+      description: description,
+    );
     _movies.add(movie);
     saveMovietoStorage();
+    print('movie added');
     notifyListeners();
   }
 
-  void addshow(TvShow show){
+  void addshow({
+    required String title,
+    required String description,
+    required String poster,
+    required String banner,
+    required String rating,
+    required String release,
+  }) {
+    final show = TvShow(
+      date: release,
+      title: title,
+      rating: rating,
+      bannerPath: banner,
+      posterPath: poster,
+      description: description,
+    );
     _tvshows.add(show);
     saveTvShowstoStorage();
+    print('show added');
     notifyListeners();
   }
 
-  void deletemovie(String title){
-    _movies.removeWhere((movie)=> movie.title == title);
+  void deletemovie(String title) {
+    _movies.removeWhere((movie) => movie.title == title);
     saveMovietoStorage();
+    print('movie deleted');
     notifyListeners();
   }
 
-  void deleteShows(String title){
-    _tvshows.removeWhere((show)=> show.title == title);
+  void deleteShows(String title) {
+    _tvshows.removeWhere((show) => show.title == title);
     saveTvShowstoStorage();
+    print('show deleted');
     notifyListeners();
   }
+
+  
   
 }

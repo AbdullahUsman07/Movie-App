@@ -43,6 +43,7 @@ class TopRatedMovies extends StatelessWidget {
                               poster:
                                   'https://image.tmdb.org/t/p/w500' +
                                   topRated[index]['poster_path'],
+                              isMovie: true,
                             ),
                       ),
                     );
