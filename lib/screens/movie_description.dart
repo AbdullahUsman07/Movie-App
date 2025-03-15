@@ -153,7 +153,6 @@ import 'package:provider/provider.dart';
 
 class MovieDescriptionScreen extends StatefulWidget {
   Movie movie;
-  bool isFav = false;
 
   MovieDescriptionScreen({
     super.key,
@@ -197,25 +196,14 @@ class _MovieDescriptionScreenState extends State<MovieDescriptionScreen> {
                     right: 10,
                     bottom: 2,
                     child:
-                        widget.isFav
-                            ? IconButton(
+                        IconButton(
                               onPressed: () {
                                 setState(() {
-                                  widget.isFav = !widget.isFav;
-                                  provider.deletemovie(widget.movie.title);
+                                  provider.toggleFavouriteMovie(widget.movie);
                                 });
                               },
-                              icon: Icon(Icons.favorite, color: Colors.red),
+                              icon: Icon(Icons.favorite, color:provider.isFavouriteMovie(widget.movie.title)? Colors.red : Colors.white),
                             )
-                            : IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  widget.isFav = !widget.isFav;
-                                  provider.addmovies(widget.movie);
-                                });
-                              },
-                              icon: Icon(Icons.favorite, color: Colors.white),
-                            ),
                   ),
                 ],
               ),

@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 class ShowDescriptionScreen extends StatefulWidget {
   TvShow show;
-  bool isFav = false;
 
   ShowDescriptionScreen({
     super.key,
@@ -51,25 +50,14 @@ class _ShowDescriptionScreenState extends State<ShowDescriptionScreen> {
                     right: 10,
                     bottom: 2,
                     child:
-                        widget.isFav
-                            ? IconButton(
+                        IconButton(
                               onPressed: () {
                                 setState(() {
-                                  widget.isFav = !widget.isFav;
-                                  provider.deleteShows(widget.show.title);
+                                  provider.toggleFavouriteShow(widget.show);
                                 });
                               },
-                              icon: Icon(Icons.favorite, color: Colors.red),
+                              icon: Icon(Icons.favorite, color:provider.isFavouriteShow(widget.show.title)? Colors.red : Colors.white),
                             )
-                            : IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  widget.isFav = !widget.isFav;
-                                  provider.addshow(widget.show);
-                                });
-                              },
-                              icon: Icon(Icons.favorite, color: Colors.white),
-                            ),
                   ),
                 ],
               ),

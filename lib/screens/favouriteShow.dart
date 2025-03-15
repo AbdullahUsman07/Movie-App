@@ -22,10 +22,40 @@ class FavShows extends StatelessWidget {
       body: shows.isEmpty? Container():
       GridView.builder(
         itemCount: shows.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), itemBuilder: (context,index){
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 2,
+          childAspectRatio: 2/3), itemBuilder: (context,index){
           return Card(
-            child: Image(image: NetworkImage(shows[index].posterPath,)),
-          );
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 200,
+                            width: 150,
+                            child: Image(image: NetworkImage(
+                              shows[index].posterPath,),fit: BoxFit.fill,),
+                          ),
+                          const SizedBox(height: 10,),
+                          Container(
+                            height: 40,
+                            width: 150,
+                            child: Row(
+                              children: [
+                                Custom_Text(text: 'Remove', color: Colors.white, font: 20),
+                                const SizedBox(width: 26,),
+                                IconButton(onPressed: (){
+                                  provider.toggleFavouriteShow(shows[index]);
+                                }, icon: Icon(Icons.delete,
+                                color:Colors.white)),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    );
         }),
     );
   }

@@ -85,8 +85,27 @@ void loadShowsfromStorage() {
   }
 
 
-  void toggleFavouriteMovie(){
+  void toggleFavouriteMovie(Movie movie){
+    if(isFavouriteMovie(movie.title)){
+      _movies.removeWhere((m) => m.title == movie.title);
+    }
+    else{
+      _movies.add(movie);
+    }
+    saveMovietoStorage();
+    notifyListeners();
+  }
+  
 
+  void toggleFavouriteShow(TvShow show){
+    if(isFavouriteShow(show.title)){
+      _tvshows.removeWhere((tv) => tv.title == show.title);
+    }
+    else{
+      _tvshows.add(show);
+    }
+    saveTvShowstoStorage();
+    notifyListeners();
   }
   
 }
