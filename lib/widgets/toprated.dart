@@ -86,6 +86,7 @@ class TopRatedMovies extends StatelessWidget {
             ),
           ),
         ],
+        
       ),
     );
   }

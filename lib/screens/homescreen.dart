@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:movie_app/screens/favouriteMovies.dart';
 import 'package:movie_app/screens/favouriteShow.dart';
@@ -7,6 +6,7 @@ import 'package:movie_app/widgets/toprated.dart';
 import 'package:movie_app/widgets/trending.dart';
 import 'package:movie_app/widgets/tvshows.dart';
 import 'package:tmdb_api/tmdb_api.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -26,19 +25,20 @@ class _HomeScreenState extends State<HomeScreen> {
   List trendingmovies = [];
   List topmovies = [];
   List tvshows = [];
+  int topmoviePage = 0, trendingmoviePage = 0, tvshowPage = 0;
 
   final String apikey = '7820d399b5158416f9adcc0dc90a6f01';
-  final String accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ODIwZDM5OWI1MTU4NDE2ZjlhZGNjMGRjOTBhNmYwMSIsIm5iZiI6MTc0MTYwMzU4NS41NTcsInN1YiI6IjY3Y2VjMzAxM2MyNTQ0NDg4MmUzMTMyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UNilSkvsG-SVjTDHncDQ675WQkCSmIwEjgtrwrjrxMg';
+  final String accessToken =
+      'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ODIwZDM5OWI1MTU4NDE2ZjlhZGNjMGRjOTBhNmYwMSIsIm5iZiI6MTc0MTYwMzU4NS41NTcsInN1YiI6IjY3Y2VjMzAxM2MyNTQ0NDg4MmUzMTMyOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UNilSkvsG-SVjTDHncDQ675WQkCSmIwEjgtrwrjrxMg';
 
-  loadmovies()async{
-    TMDB tmdbobj = TMDB(ApiKeys(apikey, accessToken),
-    logConfig: ConfigLogger(
-      showLogs: true,
-      showErrorLogs: true,
-    ));
+  loadmovies() async {
+    TMDB tmdbobj = TMDB(
+      ApiKeys(apikey, accessToken),
+      logConfig: ConfigLogger(showLogs: true, showErrorLogs: true),
+    );
 
     Map trendingresult = await tmdbobj.v3.trending.getTrending();
-    Map topmoviesresult  = await tmdbobj.v3.movies.getTopRated();
+    Map topmoviesresult = await tmdbobj.v3.movies.getTopRated();
     Map tvresult = await tmdbobj.v3.tv.getPopular();
 
     setState(() {
@@ -48,11 +48,43 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  getmoreTopMovies() async {
+    topmoviePage++; // Increment page number
+    TMDB tmdbobj = TMDB(ApiKeys(apikey, accessToken));
+    Map topmoviesresult = await tmdbobj.v3.movies.getTopRated(
+      page: topmoviePage,
+    );
+
+    setState(() {
+      List newMovies = topmoviesresult['results'];
+
+      // remove the duplicate results
+      newMovies.removeWhere((newMovie)=> topmovies.any((existingmovies)=> existingmovies['id']  == newMovie['id']));
+
+      if(!newMovies.isEmpty){
+        topmovies.addAll(newMovies);
+      }
+      else{
+        Fluttertoast.showToast(msg: 'Kindly press again');
+      }
+    });
+  }
+
+  getmoreTrendingMovies() async {
+    trendingmoviePage++;
+  }
+
+  getMoreTvShows() {}
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(  
+    return Scaffold(
       appBar: AppBar(
-        title: Custom_Text(text: 'Enjoy Free Movies', color: Colors.white, font: 26),
+        title: Custom_Text(
+          text: 'Enjoy Free Movies',
+          color: Colors.white,
+          font: 26,
+        ),
         backgroundColor: Colors.transparent,
         elevation: 10.0,
       ),
@@ -62,75 +94,132 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               height: 230,
               width: double.infinity,
-             // color: Colors.green,
               child: Row(
                 children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: CircleAvatar(
-                    radius: 60,
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: CircleAvatar(radius: 60),
                   ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 75),
-                      child: Custom_Text(text: 'Abdullah Usman', color: Colors.white, font: 20),
-                    ),
-                    const SizedBox(height: 5,),
-                    Custom_Text(text: 'au87235@gmail.com', color: Colors.white, font: 15),
-                  ],
-                )
-              ],),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 75),
+                        child: Custom_Text(
+                          text: 'Abdullah Usman',
+                          color: Colors.white,
+                          font: 20,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Custom_Text(
+                        text: 'au87235@gmail.com',
+                        color: Colors.white,
+                        font: 15,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             Divider(),
             ListTile(
-              leading: IconButton(onPressed: (){
-                Navigator.push(context, 
-                MaterialPageRoute(builder: (context)=> FavMovies()));
-              }, icon: Icon(Icons.movie)),
-              title: Custom_Text(text: 'Favorites Movies', color: Colors.white, font: 20),
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FavMovies()),
+                  );
+                },
+                icon: Icon(Icons.movie),
+              ),
+              title: Custom_Text(
+                text: 'Favorites Movies',
+                color: Colors.white,
+                font: 20,
+              ),
             ),
             ListTile(
-              leading: IconButton(onPressed: (){
-                Navigator.push(context, 
-                MaterialPageRoute(builder: (context)=> FavShows()));
-              }, icon: Icon(Icons.tv)),
-              title: Custom_Text(text: 'Favorites Shows', color: Colors.white, font: 20),
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FavShows()),
+                  );
+                },
+                icon: Icon(Icons.tv),
+              ),
+              title: Custom_Text(
+                text: 'Favorites Shows',
+                color: Colors.white,
+                font: 20,
+              ),
             ),
 
-            const SizedBox(height: 250,),
+            const SizedBox(height: 250),
             Divider(),
             ListTile(
               leading: Icon(Icons.logout),
               title: Custom_Text(text: 'Logout', color: Colors.white, font: 20),
-            )
+            ),
           ],
         ),
       ),
       body: ListView(
         children: [
-          const SizedBox(height: 10,),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               decoration: InputDecoration(
                 icon: Icon(Icons.search),
                 hintText: 'Search for any movie or show',
-                border:  OutlineInputBorder(
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
             ),
           ),
-          
+
           TvShows(tvShows: tvshows),
+          //LoadMoreButton(onPressed: getMoreTvShows,),
           TrendingMovies(trendingmovies: trendingmovies),
+          //LoadMoreButton(onPressed: getmoreTrendingMovies,),
           TopRatedMovies(topRated: topmovies),
-         // const SizedBox(height: 10,),
+          LoadMoreButton(onPressed: getmoreTopMovies),
         ],
-      )
+      ),
+    );
+  }
+}
+
+class LoadMoreButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  LoadMoreButton({super.key, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      width: double.infinity,
+      child: Stack(
+        children: [
+          Positioned(
+            right: 10.0,
+            child: ElevatedButton(
+              onPressed: () async {
+                onPressed();
+              },
+              style: ElevatedButton.styleFrom(elevation: 10.0),
+              child: Custom_Text(
+                text: 'Get more',
+                color: Colors.white,
+                font: 18,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

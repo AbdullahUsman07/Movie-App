@@ -24,7 +24,7 @@ class TvShows extends StatelessWidget {
             font: 23,
           ),
           Container(
-            height: 270,
+            height: 250,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: tvShows.length,
