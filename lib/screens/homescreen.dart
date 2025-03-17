@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/screens/favouriteMovies.dart';
 import 'package:movie_app/screens/favouriteShow.dart';
 import 'package:movie_app/utlis/text.dart';
+import 'package:movie_app/widgets/LoadButton.dart';
 import 'package:movie_app/widgets/toprated.dart';
 import 'package:movie_app/widgets/trending.dart';
 import 'package:movie_app/widgets/tvshows.dart';
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List trendingmovies = [];
   List topmovies = [];
   List tvshows = [];
-  int topmoviePage = 0, trendingmoviePage = 0, tvshowPage = 0;
+  int topmoviePage = 1, trendingmoviePage = 1, tvshowPage = 1;
 
   final String apikey = '7820d399b5158416f9adcc0dc90a6f01';
   final String accessToken =
@@ -56,25 +57,30 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     setState(() {
-      List newMovies = topmoviesresult['results'];
-
-      // remove the duplicate results
-      newMovies.removeWhere((newMovie)=> topmovies.any((existingmovies)=> existingmovies['id']  == newMovie['id']));
-
-      if(!newMovies.isEmpty){
-        topmovies.addAll(newMovies);
-      }
-      else{
-        Fluttertoast.showToast(msg: 'Kindly press again');
-      }
+      topmovies.addAll(topmoviesresult['results']);
     });
   }
 
   getmoreTrendingMovies() async {
     trendingmoviePage++;
+
+    TMDB tmdbobj = TMDB(ApiKeys(apikey, accessToken));
+    Map trendingresult = await tmdbobj.v3.trending.getTrending(page: trendingmoviePage);
+
+    setState(() {
+      trendingmovies.addAll(trendingresult['results']);
+    }); 
   }
 
-  getMoreTvShows() {}
+  getMoreTvShows() async{
+    tvshowPage++;
+    TMDB tmdbobj = TMDB(ApiKeys(apikey, accessToken));
+    Map showresults = await tmdbobj.v3.tv.getPopular(page: tvshowPage);
+
+    setState(() {
+      tvshows.addAll(showresults['results']);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,9 +188,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           TvShows(tvShows: tvshows),
-          //LoadMoreButton(onPressed: getMoreTvShows,),
+          LoadMoreButton(onPressed: getMoreTvShows,),
           TrendingMovies(trendingmovies: trendingmovies),
-          //LoadMoreButton(onPressed: getmoreTrendingMovies,),
+          LoadMoreButton(onPressed: getmoreTrendingMovies,),
           TopRatedMovies(topRated: topmovies),
           LoadMoreButton(onPressed: getmoreTopMovies),
         ],
@@ -193,33 +199,3 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class LoadMoreButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  LoadMoreButton({super.key, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: double.infinity,
-      child: Stack(
-        children: [
-          Positioned(
-            right: 10.0,
-            child: ElevatedButton(
-              onPressed: () async {
-                onPressed();
-              },
-              style: ElevatedButton.styleFrom(elevation: 10.0),
-              child: Custom_Text(
-                text: 'Get more',
-                color: Colors.white,
-                font: 18,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

@@ -66,13 +66,15 @@ class TrendingMovies extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Custom_Text(
-                          text:
-                              trendingmovies[index]['title'] != null
-                                  ? trendingmovies[index]['title']
-                                  : 'Loading',
-                          color: Colors.white,
-                          font: 15,
+                        Expanded(
+                          child: Custom_Text(
+                            text:
+                                trendingmovies[index]['title'] != null
+                                    ? trendingmovies[index]['title']
+                                    : 'Loading',
+                            color: Colors.white,
+                            font: 15,
+                          ),
                         ),
                       ],
                     ),

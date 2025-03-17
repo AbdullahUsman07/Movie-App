@@ -69,13 +69,15 @@ class TopRatedMovies extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Custom_Text(
-                                  text:
-                                      topRated[index]['title'] != null
-                                          ? topRated[index]['title']
-                                          : 'Loading',
-                                  color: Colors.white,
-                                  font: 15,
+                                Expanded(
+                                  child: Custom_Text(
+                                    text:
+                                        topRated[index]['title'] != null
+                                            ? topRated[index]['title']
+                                            : 'Loading',
+                                    color: Colors.white,
+                                    font: 15,
+                                  ),
                                 ),
                               ],
                             ),

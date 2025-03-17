@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/models/tvshowMode.dart';
-import 'package:movie_app/screens/movie_description.dart';
 import 'package:movie_app/screens/show_description.dart';
 import 'package:movie_app/utlis/text.dart';
 
@@ -47,7 +46,7 @@ class TvShows extends StatelessWidget {
                       children: [
                         Container(
                           margin: const EdgeInsets.all(10.0),
-                          height: 200,
+                          height: 210,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
@@ -59,13 +58,15 @@ class TvShows extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Custom_Text(
-                          text:
-                              tvShows[index]['original_name'] != null
-                                  ? tvShows[index]['original_name']
-                                  : 'Loading',
-                          color: Colors.white,
-                          font: 15,
+                        Expanded(
+                          child: Custom_Text(
+                            text:
+                                tvShows[index]['original_name'] != null
+                                    ? tvShows[index]['original_name']
+                                    : 'Loading',
+                            color: Colors.white,
+                            font: 15,
+                          ),
                         ),
                       ],
                     ),
