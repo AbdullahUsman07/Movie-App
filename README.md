@@ -1,16 +1,31 @@
-# movie_app
+# 🎬 Movie App
 
-A new Flutter project.
+A **Flutter-based** movie app that fetches trending movies, TV shows, and top-rated movies from **TMDB API**. Users can browse, view details, and save favorites with **local storage**.
 
-## Getting Started
+## 🚀 Features
+- 📺 Fetches **Trending Movies, TV Shows, and Top-Rated Movies**
+- 🔄 **Load More** button to explore additional content
+- 📖 Detailed **Movie Description Page** (Synopsis, Rating, etc.)
+- ❤️ Add movies/shows to **Favorites** (Stored Locally)
+- 📦 **Local Storage** for persistent data
+- 🏗️ **State Management** using **Provider**
 
-This project is a starting point for a Flutter application.
+## 🔑 API Used
+- **TMDB API** for fetching movie and TV show data
 
-A few resources to get you started if this is your first Flutter project:
+## 📦 Storage
+- **Local Storage** for storing user’s favorite movies and shows
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🛠 Installation
+```bash
+git clone https://github.com/yourusername/movie-app.git
+cd movie-app
+flutter pub get
+flutter run
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🤝 Contributing
+Contributions are welcome! Feel free to fork the repository and submit a pull request.
+
+## 📜 License
+This project is licensed under the **MIT License**.
