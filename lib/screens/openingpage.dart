@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:movie_app/screens/loginScreen.dart';
 import 'package:movie_app/screens/registerScreen.dart';
@@ -22,24 +21,34 @@ class LandingScreen extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage('assets/images/bg-image.jpg'))
+            image: AssetImage('assets/images/bg-image.jpg'),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 350,),
+              const SizedBox(height: 350),
               CustomButton(
-                onTap: ()=> Navigator.push(
-                  context, MaterialPageRoute(builder: (context)=> LoginScreen())),
-                title: 'Login', color: Theme.of(context).primaryColor),
-              const SizedBox(height: 15,),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    ),
+                title: 'Login',
+                color: Theme.of(context).primaryColor,
+              ),
+              const SizedBox(height: 15),
               CustomButton(
-                onTap: ()=> Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context)=>RegisterScreen())),
-                title: 'Register', color: Theme.of(context).primaryColor),
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterScreen()),
+                    ),
+                title: 'Register',
+                color: Theme.of(context).primaryColor,
+              ),
             ],
           ),
         ),
