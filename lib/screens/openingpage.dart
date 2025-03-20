@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:movie_app/screens/loginScreen.dart';
+import 'package:movie_app/screens/registerScreen.dart';
 import 'package:movie_app/widgets/login-signupButton.dart';
 
 class LandingScreen extends StatelessWidget {
@@ -28,9 +30,16 @@ class LandingScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 350,),
-              CustomButton(title: 'Login', color: Theme.of(context).primaryColor),
+              CustomButton(
+                onTap: ()=> Navigator.push(
+                  context, MaterialPageRoute(builder: (context)=> LoginScreen())),
+                title: 'Login', color: Theme.of(context).primaryColor),
               const SizedBox(height: 15,),
-              CustomButton(title: 'Register', color: Theme.of(context).primaryColor),
+              CustomButton(
+                onTap: ()=> Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context)=>RegisterScreen())),
+                title: 'Register', color: Theme.of(context).primaryColor),
             ],
           ),
         ),

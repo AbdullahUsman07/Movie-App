@@ -1,6 +1,8 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:movie_app/screens/openingpage.dart';
+import 'package:movie_app/screens/registerScreen.dart';
 import 'package:movie_app/widgets/CustomInputFeild.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -24,6 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          Navigator.pushAndRemoveUntil(context,
+           MaterialPageRoute(builder: (context) => LandingScreen()),
+            (route) => false);
+        }, icon: Icon(Icons.arrow_back)),
+      ),
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -54,13 +63,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     CustomFormFeild(title: 'Email', controller: _emailController),
                     const SizedBox(height: 20,),
                     CustomFormFeild(title: 'Password', controller: _passwordController),
-                    const SizedBox(height: 30,),
+                    const SizedBox(height: 20,),
+                    ElevatedButton(onPressed: (){}, child: const Text('Login')),
+                    const SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                       Text('Dont Have an Account?'),
-                      
-                      TextButton(onPressed: (){}, child: const Text('Register'))
+                      TextButton(onPressed: (){
+                        Navigator.push(
+                          context, MaterialPageRoute(builder: (context)=> RegisterScreen()));
+                      }, child: const Text('Register'))
                     ],)
                   ],
                 ),

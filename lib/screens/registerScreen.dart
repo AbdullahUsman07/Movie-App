@@ -1,6 +1,8 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:movie_app/screens/loginScreen.dart';
+import 'package:movie_app/screens/openingpage.dart';
 import 'package:movie_app/utlis/text.dart';
 import 'package:movie_app/widgets/CustomInputFeild.dart';
 
@@ -28,6 +30,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          Navigator.pushAndRemoveUntil(context,
+           MaterialPageRoute(builder: (context) => LandingScreen()),
+            (route) => false);
+        }, icon: Icon(Icons.arrow_back)),
+      ),
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -47,10 +56,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 color: Colors.black.withAlpha(70),
                 borderRadius: BorderRadius.circular(15.0),
               ),
-              child: Column(
+              child: ListView(
+                scrollDirection: Axis.vertical,
                 children: [
                   const SizedBox(height: 30,),
-                  Text('Register',style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
+                  Center(child: Text('Register',style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),)),
                   const SizedBox(height: 40,),
                   CustomFormFeild(title: 'Username', controller: _namecontroller),
                   const SizedBox(height: 20,),
@@ -59,12 +69,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   CustomFormFeild(title: 'Password', controller: _passwordcontroller),
                   const SizedBox(height: 20,),
                   CustomFormFeild(title: 'Re-enter Password', controller: _recheckcontroller),
-                  const SizedBox(height: 30,),
+                  const SizedBox(height: 20,),
+                  ElevatedButton(onPressed: (){}, child: const Text('Register')),
+                  const SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Already Have an Account?'),
-                      TextButton(onPressed: (){}, child: const Text('Login')),
+                      TextButton(onPressed: (){
+                        Navigator.push(
+                          context,
+                           MaterialPageRoute(builder: (context) => LoginScreen()));
+                      }, child: const Text('Login')),
                     ],)
                 ],
               ),

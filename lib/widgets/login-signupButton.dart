@@ -7,18 +7,18 @@ class CustomButton extends StatelessWidget {
    CustomButton({
     super.key,
     required this.title,
-  //  required this.onTap,
+    required this.onTap,
     required this.color,
   });
 
   String title;
   Color? color;
-  //void Function()? onTap;
+  void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      //onTap: onTap,
+      onTap: onTap,
       child: Container(height: 60, width: double.infinity,
       decoration: BoxDecoration(
         color: color,
