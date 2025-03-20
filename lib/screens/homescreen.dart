@@ -193,6 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
           LoadMoreButton(onPressed: getmoreTrendingMovies,),
           TopRatedMovies(topRated: topmovies),
           LoadMoreButton(onPressed: getmoreTopMovies),
+          const SizedBox(height: 5,),
         ],
       ),
     );

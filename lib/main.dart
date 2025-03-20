@@ -1,8 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:movie_app/screens/loginScreen.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:movie_app/provider/tv-movie-provider.dart';
 import 'package:movie_app/screens/homescreen.dart';
+import 'package:movie_app/screens/openingpage.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main()async{
@@ -26,8 +28,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.dark,
         ),
-        home: HomeScreen(),
+        home:LoginScreen(),
       ),
     );
   }
 }
+
+
