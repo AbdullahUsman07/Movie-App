@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/screens/homescreen.dart';
 import 'package:movie_app/screens/loginScreen.dart';
 import 'package:movie_app/screens/openingpage.dart';
 import 'package:movie_app/utlis/text.dart';
@@ -58,7 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage('assets/images/bg-image.jpg'),
+            image: AssetImage('assets/images/new-bg.jpg'),
           ),
         ),
         child: Center(
@@ -141,6 +142,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color.fromRGBO(5,33, 89,1),
+                      foregroundColor: Colors.white,
+                      
+                    ),
                     onPressed:
                         (isRegistered && validation.isValidRegister)
                             ? () {
@@ -150,6 +156,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               _namecontroller.clear();
 
                               FocusScope.of(context).unfocus();
+
+                              setState(() {
+                                isRegistered= false;
+                              });
+
+                             Navigator.pushAndRemoveUntil(
+                              context,
+                               MaterialPageRoute(builder: (context) => HomeScreen()),
+                                (route) => false);
                             }
                             : null,
                     child: const Text('Register'),

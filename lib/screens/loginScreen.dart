@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/screens/homescreen.dart';
 import 'package:movie_app/screens/openingpage.dart';
 import 'package:movie_app/screens/registerScreen.dart';
 import 'package:movie_app/validation/validationLogic.dart';
@@ -35,6 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         leading: IconButton(
           onPressed: () {
             Navigator.pushAndRemoveUntil(
@@ -52,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: AssetImage('assets/images/bg-image.jpg'),
+            image: AssetImage('assets/images/new-bg.jpg'),
           ),
         ),
         child: Center(
@@ -68,16 +71,18 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
+                child: ListView(
                   //mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(height: 30),
-                    Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+                    Center(
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -110,6 +115,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color.fromRGBO(5,33, 89,1),
+                        foregroundColor: Colors.white,
+                      ),
                       onPressed:
                           (isLogin && validation.isValidLogin)
                               ? () {
@@ -120,6 +129,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // reset so that button will disable again
                                   isLogin = false;
                                 });
+
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                   MaterialPageRoute(builder: (context) => HomeScreen()),
+                                    (route) => false);
                               }
                               : null,
                       child: const Text('Login'),

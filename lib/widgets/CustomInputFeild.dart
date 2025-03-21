@@ -37,7 +37,7 @@ class _CustomFormFeildState extends State<CustomFormFeild> {
       keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         suffixIcon: widget.isPass?InkWell(
-          child: const Icon(Icons.remove_red_eye_rounded),
+          child: widget.obscureText? Icon(Icons.visibility) : Icon(Icons.visibility_off),
           onTap: ()=> setState(() {
             widget.obscureText = ! widget.obscureText;
           }),
