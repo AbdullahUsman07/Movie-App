@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:movie_app/firebase/firebaseAuth.dart';
 import 'package:movie_app/screens/homescreen.dart';
 import 'package:movie_app/screens/openingpage.dart';
 import 'package:movie_app/screens/registerScreen.dart';
@@ -14,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   CheckValidation validation = CheckValidation();
+  UserAuth auth = UserAuth();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -116,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromRGBO(5,33, 89,1),
+                        backgroundColor: Color.fromRGBO(5, 33, 89, 1),
                         foregroundColor: Colors.white,
                       ),
                       onPressed:
@@ -129,11 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // reset so that button will disable again
                                   isLogin = false;
                                 });
-
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                   MaterialPageRoute(builder: (context) => HomeScreen()),
-                                    (route) => false);
+                                _login();
                               }
                               : null,
                       child: const Text('Login'),
@@ -164,5 +164,19 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  _login() async {
+    User? user = await auth.loginUser(email, password);
+    if (user != null) {
+      Fluttertoast.showToast(msg: 'Login Successful');
+      Future.delayed(Duration(milliseconds: 500), () {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (route) => false,
+        );
+      });
+    }
   }
 }

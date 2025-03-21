@@ -1,11 +1,15 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/provider/tv-movie-provider.dart';
+import 'package:movie_app/screens/homescreen.dart';
 import 'package:movie_app/screens/openingpage.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main()async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -23,7 +27,15 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.dark,
         ),
-        home: LandingScreen(),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+           builder:(context,snapshot){
+            if(snapshot.hasData){
+              return HomeScreen();
+            }else{
+              return LandingScreen();
+            }
+           })
       ),
     );
   }

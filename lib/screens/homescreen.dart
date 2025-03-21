@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/firebase/firebaseAuth.dart';
 import 'package:movie_app/screens/favouriteMovies.dart';
 import 'package:movie_app/screens/favouriteShow.dart';
 import 'package:movie_app/screens/openingpage.dart';
@@ -23,6 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     loadmovies();
   }
+
+  UserAuth auth = UserAuth();
 
   List trendingmovies = [];
   List topmovies = [];
@@ -170,11 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               leading: IconButton(
                 onPressed: () {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => LandingScreen()),
-                    (route) => false,
-                  );
+                  auth.signout();
                 },
                 icon: Icon(Icons.logout),
               ),

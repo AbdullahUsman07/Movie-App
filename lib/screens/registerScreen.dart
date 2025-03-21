@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:movie_app/firebase/firebaseAuth.dart';
 import 'package:movie_app/screens/homescreen.dart';
 import 'package:movie_app/screens/loginScreen.dart';
 import 'package:movie_app/screens/openingpage.dart';
@@ -14,6 +17,8 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   CheckValidation validation = CheckValidation();
+
+  UserAuth auth = UserAuth();
 
   final _namecontroller = TextEditingController();
   final _emailcontroller = TextEditingController();
@@ -158,14 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               setState(() {
                                 isRegistered = false;
                               });
-
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomeScreen(),
-                                ),
-                                (route) => false,
-                              );
+                              _register();
                             }
                             : null,
                     child: const Text('Register'),
@@ -195,5 +193,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  _register() async {
+    User? user = await auth.registerUser(email, password);
+    if (user != null) {
+      Fluttertoast.showToast(msg: 'Sign up Successful');
+      Future.delayed(Duration(milliseconds: 500), () {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (route) => false,
+        );
+      });
+    }
   }
 }
