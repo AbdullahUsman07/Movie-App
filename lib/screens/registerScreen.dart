@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/screens/homescreen.dart';
 import 'package:movie_app/screens/loginScreen.dart';
 import 'package:movie_app/screens/openingpage.dart';
-import 'package:movie_app/utlis/text.dart';
 import 'package:movie_app/validation/validationLogic.dart';
 import 'package:movie_app/widgets/CustomInputFeild.dart';
 
@@ -143,9 +142,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(5,33, 89,1),
+                      backgroundColor: Color.fromRGBO(5, 33, 89, 1),
                       foregroundColor: Colors.white,
-                      
                     ),
                     onPressed:
                         (isRegistered && validation.isValidRegister)
@@ -158,13 +156,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               FocusScope.of(context).unfocus();
 
                               setState(() {
-                                isRegistered= false;
+                                isRegistered = false;
                               });
 
-                             Navigator.pushAndRemoveUntil(
-                              context,
-                               MaterialPageRoute(builder: (context) => HomeScreen()),
-                                (route) => false);
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomeScreen(),
+                                ),
+                                (route) => false,
+                              );
                             }
                             : null,
                     child: const Text('Register'),

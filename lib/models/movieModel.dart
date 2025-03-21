@@ -18,27 +18,27 @@ class Movie{
     required this.description,
 });
 
-  Map<String,dynamic> toJson(){
-  return{
-    'title': title,
-    'date': date,
-    'poster': posterPath,
-    'banner': bannerPath,
-    'description': description,
-    'rating': rating,
-  };
-}
+//   Map<String,dynamic> toJson(){
+//   return{
+//     'title': title,
+//     'date': date,
+//     'poster': posterPath,
+//     'banner': bannerPath,
+//     'description': description,
+//     'rating': rating,
+//   };
+// }
 
-factory Movie.fromJson(Map<String,dynamic> json){
-  return Movie(
-    title : json['title'],
-    description: json['description'],
-    bannerPath: json['banner'],
-    rating: json['rating'],
-    posterPath: json['poster'],
-    date: json['date'],
-  );
-}
+// factory Movie.fromJson(Map<String,dynamic> json){
+//   return Movie(
+//     title : json['title'],
+//     description: json['description'],
+//     bannerPath: json['banner'],
+//     rating: json['rating'],
+//     posterPath: json['poster'],
+//     date: json['date'],
+//   );
+// }
 
 }
 

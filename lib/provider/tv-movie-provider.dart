@@ -3,10 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:movie_app/models/movieModel.dart';
 import 'package:movie_app/models/tvshowMode.dart';
-import 'package:localstorage/localstorage.dart';
 
 class MovieAndShowProvider extends ChangeNotifier {
-  final LocalStorage storage;
+  //final LocalStorage storage;
 
   List<Movie> _movies = [];
   List<TvShow> _tvshows = [];
@@ -15,63 +14,59 @@ class MovieAndShowProvider extends ChangeNotifier {
   List<TvShow> get tvshows => _tvshows;
   
 
-  MovieAndShowProvider(this.storage) {
-    loadMoviefromStorage();
-    loadShowsfromStorage();
-  }
+//   MovieAndShowProvider(this.storage) {
+//     loadMoviefromStorage();
+//     loadShowsfromStorage();
+//   }
 
- void loadMoviefromStorage() {
-  var storedmovie = storage.getItem('movies');
-  if (storedmovie != null) {
-    List<dynamic> decodedList = jsonDecode(storedmovie);
-    _movies = decodedList.map((movie) => Movie.fromJson(movie)).toList();
-    notifyListeners();
-  }
-}
+//  void loadMoviefromStorage() {
+//   var storedmovie = storage.getItem('movies');
+//   if (storedmovie != null) {
+//     List<dynamic> decodedList = jsonDecode(storedmovie);
+//     _movies = decodedList.map((movie) => Movie.fromJson(movie)).toList();
+//     notifyListeners();
+//   }
+// }
 
-void loadShowsfromStorage() {
-  var storedshow = storage.getItem('tvshows');
-  if (storedshow != null) {
-    List<dynamic> decodedList = jsonDecode(storedshow);
-    _tvshows = decodedList.map((tvshow) => TvShow.fromJson(tvshow)).toList();
-    notifyListeners();
-  }
-}
+// void loadShowsfromStorage() {
+//   var storedshow = storage.getItem('tvshows');
+//   if (storedshow != null) {
+//     List<dynamic> decodedList = jsonDecode(storedshow);
+//     _tvshows = decodedList.map((tvshow) => TvShow.fromJson(tvshow)).toList();
+//     notifyListeners();
+//   }
+// }
 
-  void saveMovietoStorage() {
-    String jsonString = jsonEncode(_movies.map((m) => m.toJson()).toList());
-    storage.setItem('movies', jsonString);
-  }
+  // void saveMovietoStorage() {
+  //   String jsonString = jsonEncode(_movies.map((m) => m.toJson()).toList());
+  //   storage.setItem('movies', jsonString);
+  // }
 
-  void saveTvShowstoStorage() {
-    String jsonString = jsonEncode(_tvshows.map((tv) => tv.toJson()).toList());
-    storage.setItem('tvshows', jsonString);
-  }
+  // void saveTvShowstoStorage() {
+  //   String jsonString = jsonEncode(_tvshows.map((tv) => tv.toJson()).toList());
+  //   storage.setItem('tvshows', jsonString);
+  // }
 
   void addmovies(Movie movie) {
     _movies.add(movie);
-    saveMovietoStorage();
     print('movie added');
     notifyListeners();
   }
 
   void addshow(TvShow show) {
     _tvshows.add(show);
-    saveTvShowstoStorage();
     print('show added');
     notifyListeners();
   }
 
   void deletemovie(String title) {
     _movies.removeWhere((movie) => movie.title == title);
-    saveMovietoStorage();
     print('movie deleted');
     notifyListeners();
   }
 
   void deleteShows(String title) {
     _tvshows.removeWhere((show) => show.title == title);
-    saveTvShowstoStorage();
     print('show deleted');
     notifyListeners();
   }
@@ -92,7 +87,6 @@ void loadShowsfromStorage() {
     else{
       _movies.add(movie);
     }
-    saveMovietoStorage();
     notifyListeners();
   }
   
@@ -104,7 +98,6 @@ void loadShowsfromStorage() {
     else{
       _tvshows.add(show);
     }
-    saveTvShowstoStorage();
     notifyListeners();
   }
   

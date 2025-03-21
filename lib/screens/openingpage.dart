@@ -10,12 +10,6 @@ class LandingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Welcome'),
-      //   centerTitle: true,
-      //   backgroundColor: Colors.black,
-      //   elevation: 10.0,
-      // ),
       body: Container(
         height: double.infinity,
         width: double.infinity,

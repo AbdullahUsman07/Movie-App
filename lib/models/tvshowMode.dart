@@ -15,25 +15,25 @@ class TvShow {
     required this.description,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'title': title,
-      'poster': posterPath,
-      'banner': bannerPath,
-      'description': description,
-      'date': date,
-      'rating': rating,
-    };
-  }
+  // Map<String, dynamic> toJson() {
+  //   return {
+  //     'title': title,
+  //     'poster': posterPath,
+  //     'banner': bannerPath,
+  //     'description': description,
+  //     'date': date,
+  //     'rating': rating,
+  //   };
+  // }
 
-  factory TvShow.fromJson(Map<String, dynamic> json) {
-    return TvShow(
-      date: json['date'],
-      title: json['title'],
-      rating: json['rating'],
-      bannerPath: json['banner'],
-      posterPath: json['poster'],
-      description: json['description'],
-    );
-  }
+  // factory TvShow.fromJson(Map<String, dynamic> json) {
+  //   return TvShow(
+  //     date: json['date'],
+  //     title: json['title'],
+  //     rating: json['rating'],
+  //     bannerPath: json['banner'],
+  //     posterPath: json['poster'],
+  //     description: json['description'],
+  //   );
+  // }
 }

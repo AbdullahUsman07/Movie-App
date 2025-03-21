@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/screens/favouriteMovies.dart';
 import 'package:movie_app/screens/favouriteShow.dart';
+import 'package:movie_app/screens/openingpage.dart';
 import 'package:movie_app/utlis/text.dart';
 import 'package:movie_app/widgets/LoadButton.dart';
 import 'package:movie_app/widgets/toprated.dart';
@@ -65,14 +66,16 @@ class _HomeScreenState extends State<HomeScreen> {
     trendingmoviePage++;
 
     TMDB tmdbobj = TMDB(ApiKeys(apikey, accessToken));
-    Map trendingresult = await tmdbobj.v3.trending.getTrending(page: trendingmoviePage);
+    Map trendingresult = await tmdbobj.v3.trending.getTrending(
+      page: trendingmoviePage,
+    );
 
     setState(() {
       trendingmovies.addAll(trendingresult['results']);
-    }); 
+    });
   }
 
-  getMoreTvShows() async{
+  getMoreTvShows() async {
     tvshowPage++;
     TMDB tmdbobj = TMDB(ApiKeys(apikey, accessToken));
     Map showresults = await tmdbobj.v3.tv.getPopular(page: tvshowPage);
@@ -165,7 +168,16 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 250),
             Divider(),
             ListTile(
-              leading: Icon(Icons.logout),
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LandingScreen()),
+                    (route) => false,
+                  );
+                },
+                icon: Icon(Icons.logout),
+              ),
               title: Custom_Text(text: 'Logout', color: Colors.white, font: 20),
             ),
           ],
@@ -188,15 +200,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           TvShows(tvShows: tvshows),
-          LoadMoreButton(onPressed: getMoreTvShows,),
+          LoadMoreButton(onPressed: getMoreTvShows),
           TrendingMovies(trendingmovies: trendingmovies),
-          LoadMoreButton(onPressed: getmoreTrendingMovies,),
+          LoadMoreButton(onPressed: getmoreTrendingMovies),
           TopRatedMovies(topRated: topmovies),
           LoadMoreButton(onPressed: getmoreTopMovies),
-          const SizedBox(height: 5,),
+          const SizedBox(height: 5),
         ],
       ),
     );
   }
 }
-

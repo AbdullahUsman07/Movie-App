@@ -22,7 +22,7 @@ class LoadMoreButton extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(elevation: 10.0),
               child: Custom_Text(
-                text: 'Get more',
+                text: 'See more',
                 color: Colors.white,
                 font: 18,
               ),
