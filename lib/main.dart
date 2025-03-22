@@ -29,13 +29,12 @@ class MyApp extends StatelessWidget {
         home: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
-             print("Auth state changed: ${snapshot.connectionState}, hasData: ${snapshot.hasData}");
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator()); // Show loading
+              return Center(child: CircularProgressIndicator()); 
             } else if (snapshot.hasData) {
               return HomeScreen();
             } else {
-              return LandingScreen(); // User should be redirected here after sign-out
+              return LandingScreen(); 
             }
           },
         ),

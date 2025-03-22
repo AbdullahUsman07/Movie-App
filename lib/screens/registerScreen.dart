@@ -196,16 +196,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   _register() async {
-    User? user = await auth.registerUser(email, password,username);
+    User? user = await auth.registerUser(email, password, username);
     if (user != null) {
       Fluttertoast.showToast(msg: 'Sign up Successful');
-      Future.delayed(Duration(milliseconds: 500), () {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-          (route) => false,
-        );
-      });
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false,
+      );
     }
   }
 }

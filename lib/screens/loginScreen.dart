@@ -170,13 +170,11 @@ class _LoginScreenState extends State<LoginScreen> {
     User? user = await auth.loginUser(email, password);
     if (user != null) {
       Fluttertoast.showToast(msg: 'Login Successful');
-      Future.delayed(Duration(milliseconds: 500), () {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-          (route) => false,
-        );
-      });
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false,
+      );
     }
   }
 }
