@@ -18,7 +18,7 @@ A **Flutter-based** movie app that fetches trending movies, TV shows, and top-ra
 
 ## 🛠 Installation
 ```bash
-git clone https://github.com/yourusername/movie-app.git
+git clone https://github.com/AbdullahUsman07/Movie-App.git
 cd movie-app
 flutter pub get
 flutter run
