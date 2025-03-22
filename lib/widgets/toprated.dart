@@ -30,6 +30,7 @@ class TopRatedMovies extends StatelessWidget {
                 return InkWell(
                   onTap: () {
                     final movie = Movie(
+                      id: topRated[index]['id'].toString(),
                       date: topRated[index]['release_date'],
                       title: topRated[index]['title'],
                       rating: topRated[index]['vote_average'].toString(),

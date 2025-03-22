@@ -8,8 +8,6 @@ class TvShows extends StatelessWidget {
 
   List tvShows = [];
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,47 +28,62 @@ class TvShows extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    final show = TvShow(date: tvShows[index]['first_air_date'],
-                     title: tvShows[index]['original_name'],
+                    final show = TvShow(
+                      id: tvShows[index]['id'].toString(),
+                      date: tvShows[index]['first_air_date'],
+                      title: tvShows[index]['original_name'],
                       rating: tvShows[index]['vote_average'].toString(),
-                       bannerPath: 'https://image.tmdb.org/t/p/w500' + tvShows[index]['backdrop_path'], 
-                       posterPath: 'https://image.tmdb.org/t/p/w500' + tvShows[index]['poster_path'], 
-                       description: tvShows[index]['overview']);
-                    
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> ShowDescriptionScreen(show: show)));
-                    
+                      bannerPath:
+                          'https://image.tmdb.org/t/p/w500' +
+                          tvShows[index]['backdrop_path'],
+                      posterPath:
+                          'https://image.tmdb.org/t/p/w500' +
+                          tvShows[index]['poster_path'],
+                      description: tvShows[index]['overview'],
+                    );
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ShowDescriptionScreen(show: show),
+                      ),
+                    );
                   },
-                  child: tvShows[index]['original_name']!= null  && tvShows[index]['backdrop_path']!= null? Container(
-                    width: 300,
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.all(10.0),
-                          height: 210,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                'https://image.tmdb.org/t/p/w500' +
-                                    tvShows[index]['backdrop_path'],
-                              ),
-                              fit: BoxFit.cover,
+                  child:
+                      tvShows[index]['original_name'] != null &&
+                              tvShows[index]['backdrop_path'] != null
+                          ? Container(
+                            width: 300,
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.all(10.0),
+                                  height: 210,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        'https://image.tmdb.org/t/p/w500' +
+                                            tvShows[index]['backdrop_path'],
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Custom_Text(
+                                    text:
+                                        tvShows[index]['original_name'] != null
+                                            ? tvShows[index]['original_name']
+                                            : 'Loading',
+                                    color: Colors.white,
+                                    font: 15,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Custom_Text(
-                            text:
-                                tvShows[index]['original_name'] != null
-                                    ? tvShows[index]['original_name']
-                                    : 'Loading',
-                            color: Colors.white,
-                            font: 15,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ): Container(),
+                          )
+                          : Container(),
                 );
               },
             ),
@@ -79,5 +92,4 @@ class TvShows extends StatelessWidget {
       ),
     );
   }
-  
 }

@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,7 @@ import 'package:movie_app/screens/homescreen.dart';
 import 'package:movie_app/screens/openingpage.dart';
 import 'package:provider/provider.dart';
 
-Future<void> main()async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -20,25 +19,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => MovieAndShowProvider())
-      ],
-      child: MaterialApp(  
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          brightness: Brightness.dark,
+        ChangeNotifierProvider(
+          create: (context) => MovieAndShowProvider()..fetchDataFromFirestore(),
         ),
-        home: StreamBuilder(
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(brightness: Brightness.dark),
+        home: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
-           builder:(context,snapshot){
-            if(snapshot.hasData){
+          builder: (context, snapshot) {
+             print("Auth state changed: ${snapshot.connectionState}, hasData: ${snapshot.hasData}");
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator()); // Show loading
+            } else if (snapshot.hasData) {
               return HomeScreen();
-            }else{
-              return LandingScreen();
+            } else {
+              return LandingScreen(); // User should be redirected here after sign-out
             }
-           })
+          },
+        ),
       ),
     );
   }
 }
-
-

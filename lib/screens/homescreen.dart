@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/firebase/firebaseAuth.dart';
 import 'package:movie_app/screens/favouriteMovies.dart';
@@ -88,6 +89,10 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+
+  // getting the current logged in user's data to show in the drawer
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,16 +123,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 75),
                         child: Custom_Text(
-                          text: 'Abdullah Usman',
+                          text: user?.displayName?? 'No name',
                           color: Colors.white,
                           font: 20,
                         ),
                       ),
                       const SizedBox(height: 5),
-                      Custom_Text(
-                        text: 'au87235@gmail.com',
-                        color: Colors.white,
-                        font: 15,
+                      Flexible(
+                        child: Custom_Text(
+                          text: user?.email?? 'default@gmail.com',
+                          color: Colors.white,
+                          font: 13,
+                        ),
                       ),
                     ],
                   ),
@@ -173,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               leading: IconButton(
                 onPressed: () {
-                  auth.signout();
+                  auth.signout(context);
                 },
                 icon: Icon(Icons.logout),
               ),
