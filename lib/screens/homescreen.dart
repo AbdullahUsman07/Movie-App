@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/firebase/firebaseAuth.dart';
 import 'package:movie_app/screens/favouriteMovies.dart';
@@ -11,6 +15,8 @@ import 'package:movie_app/widgets/trending.dart';
 import 'package:movie_app/widgets/tvshows.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -89,7 +95,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-
   // getting the current logged in user's data to show in the drawer
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -115,23 +120,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: CircleAvatar(radius: 60),
+                    child:CircleAvatar(radius: 50,
+                    backgroundColor: Colors.white,
+                    backgroundImage: AssetImage('assets/images/profile-avatar.jpg'),
+                    ),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 75),
-                        child: Custom_Text(
-                          text: user?.displayName?? 'No name',
-                          color: Colors.white,
-                          font: 20,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            user?.displayName ?? 'No name',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.lora(
+                              fontSize: 17,
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 5),
                       Flexible(
                         child: Custom_Text(
-                          text: user?.email?? 'default@gmail.com',
+                          text: user?.email ?? 'default@gmail.com',
                           color: Colors.white,
                           font: 13,
                         ),
@@ -217,3 +232,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+

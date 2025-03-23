@@ -32,16 +32,6 @@ class UserAuth {
         'createdAt': FieldValue.serverTimestamp(),
       });
 
-      // // creating a sub-collection(movies) within users collection to store the favourite movies
-      // await FirebaseFirestore.instance.collection('users').doc(uid).collection('movies').doc('init').set({
-
-      // });
-
-      // // creating a sub-collection(shows) within the users collection to store the favourite tv shows
-      // await FirebaseFirestore.instance.collection('users').doc(uid).collection('shows').doc('init').set({
-      //   'message': 'Shows Collection added'
-      // });
-
       return cred.user;
     } catch (e) {
       Fluttertoast.showToast(msg: 'Something went wrong');
